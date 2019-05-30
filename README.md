@@ -1,2 +1,2 @@
 # resume
-[live](https://alx-l.netlify.com/)
+[live](https://acd.netlify.com/)
