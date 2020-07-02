@@ -25,12 +25,6 @@
       integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w="
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0="
-      crossorigin="anonymous"
-    />
     <style>
       @charset "UTF-8";
       @import url(
@@ -1155,6 +1149,16 @@
         overflow-y: auto;
         padding-right: 0 !important;
       }
+      h2.with-svg svg {
+        position: relative;
+        top: 3px;
+      }
+      p.with-svg svg {
+        position: relative;
+        top: 4px;
+        width: 20px !important;
+        height: 20px !important;
+      }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -1200,20 +1204,35 @@
         </a>
         Front-end Developer
       </h3>
-      <p>
-        <i class="fa fa-envelope-o"></i>
+      <p class="with-svg">
+        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6m-2 0l-8 5-8-5h16m0 12H4V8l8 5 8-5v10z"
+          />
+        </svg>
         <a href="mailto:alex.acd02@gmail.com" target="_blank" rel="noopener">
           alex.acd02@gmail.com
         </a>
       </p>
-      <p>
-        <i class="fa fa-github"></i>
+      <p class="with-svg">
+        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"
+          />
+        </svg>
         <a href="https://github.com/acd02" target="_blank" rel="noopener">
           https://github.com/acd02
         </a>
       </p>
-      <p>
-        <i class="fa fa-cube"></i>
+      <p class="with-svg">
+        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18-.21 0-.41-.06-.57-.18l-7.9-4.44A.991.991 0 013 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18.21 0 .41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9M12 4.15L6.04 7.5 12 10.85l5.96-3.35L12 4.15z"
+          />
+        </svg>
         <a href="https://codesandbox.io/u/acd02/sandboxes" target="_blank" rel="noopener">
           codesandbox
         </a>
@@ -1223,19 +1242,29 @@
         <a href="https://www.leboncoin.fr/" target="_blank" rel="noopener">le bon coin</a>
       </p>
       <hr />
-      <h2 id="-What-I-Do">
+      <h2 class="with-svg" id="-What-I-Do">
         <a class="anchor hidden-xs" href="#-What-I-Do" title="-What-I-Do">
           <span class="octicon octicon-link"></span>
         </a>
-        <i class="fa fa-pencil"></i>
+        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M16.84 2.73c-.39 0-.77.15-1.07.44l-2.12 2.12 5.3 5.31 2.12-2.1c.6-.61.6-1.56 0-2.14L17.9 3.17c-.3-.29-.68-.44-1.06-.44M12.94 6l-8.1 8.11 2.56.28.18 2.29 2.28.17.29 2.56 8.1-8.11m-14 3.74L2.5 21.73l6.7-1.79-.24-2.16-2.31-.17-.18-2.32"
+          />
+        </svg>
         What I Do
       </h2>
       <p>Mostly, I build user interfaces for single page apps.</p>
-      <h2 id="-Skills">
+      <h2 class="with-svg" id="-Skills">
         <a class="anchor hidden-xs" href="#-Skills" title="-Skills">
           <span class="octicon octicon-link"></span>
         </a>
-        <i class="fa fa-cog"></i>
+        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 15.5A3.5 3.5 0 018.5 12 3.5 3.5 0 0112 8.5a3.5 3.5 0 013.5 3.5 3.5 3.5 0 01-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0014 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z"
+          />
+        </svg>
         Skills
       </h2>
       <h3 id="HTML">
@@ -1353,11 +1382,16 @@
           </ul>
         </li>
       </ul>
-      <h2 id="-Experience">
+      <h2 class="with-svg" id="-Experience">
         <a class="anchor hidden-xs" href="#-Experience" title="-Experience">
           <span class="octicon octicon-link"></span>
         </a>
-        <i class="fa fa-archive"></i>
+        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M3 3h18v4H3V3m1 5h16v13H4V8m5.5 3a.5.5 0 00-.5.5V13h6v-1.5a.5.5 0 00-.5-.5h-5z"
+          />
+        </svg>
         Experience
       </h2>
       <ul>
@@ -1394,11 +1428,16 @@
           </ul>
         </li>
       </ul>
-      <h2 id="-Education">
+      <h2 class="with-svg" id="-Education">
         <a class="anchor hidden-xs" href="#-Education" title="-Education">
           <span class="octicon octicon-link"></span>
         </a>
-        <i class="fa fa-graduation-cap"></i>
+        <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"
+          />
+        </svg>
         Education
       </h2>
       <ul>
