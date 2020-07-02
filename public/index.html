@@ -1159,6 +1159,10 @@
         width: 20px !important;
         height: 20px !important;
       }
+      .icon-menu {
+        position: relative;
+        top: 3px;
+      }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -1471,7 +1475,9 @@
           aria-expanded="false"
           title="Table of content"
         >
-          <i class="fa fa-bars"></i>
+          <svg class="icon-menu" style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z" />
+          </svg>
         </a>
         <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
           <div class="toc">
