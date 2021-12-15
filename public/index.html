@@ -1161,25 +1161,6 @@
         top: 3px;
       }
     </style>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"
-        integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g="
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"
-        integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE="
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"
-        integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo="
-        crossorigin="anonymous"
-      ></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -1585,176 +1566,197 @@
         <a class="go-to-bottom" href="#">Go to bottom</a>
       </div>
     </div>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"
-      integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8="
-      crossorigin="anonymous"
-      defer
-    ></script>
+
     <script>
-      var markdown = $('.markdown-body')
+      const markdown = document.querySelector('.markdown-body')
+      const toc = document.querySelector('.ui-toc')
+      const tocAffix = document.querySelector('.ui-affix-toc')
+      const dropdown = document.querySelector('.dropdown')
+      const tocLabel = document.querySelector('#tocLabel')
+      const tocDropdown = document.querySelectorAll('.ui-toc-dropdown')
+      const hashElements = Array.from(document.querySelectorAll("a[href^='#']"))
+      const toggle = document.querySelectorAll('.expand-toggle')
+
       //smooth all hash trigger scrolling
-      function smoothHashScroll() {
-        var hashElements = $("a[href^='#']").toArray()
-        for (var i = 0; i < hashElements.length; i++) {
-          var element = hashElements[i]
-          var $element = $(element)
-          var hash = element.hash
-          if (hash) {
-            $element.on('click', function (e) {
-              // store hash
-              var hash = this.hash
-              if ($(hash).length <= 0) return
-              // prevent default anchor click behavior
-              e.preventDefault()
-              // animate
-              $('body, html')
-                .stop(true, true)
-                .animate(
-                  {
-                    scrollTop: $(hash).offset().top,
-                  },
-                  100,
-                  'linear',
-                  function () {
-                    // when done, add hash to url
-                    // (default click behaviour)
-                    window.location.hash = hash
-                  },
-                )
-            })
-          }
-        }
-      }
+      function smoothHashScroll(e) {
+        e.preventDefault()
 
-      smoothHashScroll()
-      var toc = $('.ui-toc')
-      var tocAffix = $('.ui-affix-toc')
-      var tocDropdown = $('.ui-toc-dropdown')
-      //toc
-      tocDropdown.click(function (e) {
-        e.stopPropagation()
-      })
+        matchingTitle = document.querySelector(e.target.hash)
+        if (!matchingTitle) return
 
-      var enoughForAffixToc = true
-
-      function generateScrollspy() {
-        $(document.body).scrollspy({
-          target: '',
+        matchingTitle.scrollIntoView({
+          behavior: 'smooth',
         })
-        $(document.body).scrollspy('refresh')
-        if (enoughForAffixToc) {
-          toc.hide()
-          tocAffix.show()
-        } else {
-          tocAffix.hide()
-          toc.show()
-        }
-        $(document.body).scroll()
       }
 
-      function windowResize() {
+      let enoughForAffixToc = true
+
+      function handleTocVisibility() {
+        if (enoughForAffixToc) {
+          toc.style.display = 'none'
+          tocAffix.style.display = 'block'
+        } else {
+          tocAffix.style.display = 'none'
+          toc.style.display = 'block'
+        }
+      }
+
+      function handleResize() {
         //toc right
-        var paddingRight = parseFloat(markdown.css('padding-right'))
-        var right =
-          $(window).width() -
-          (markdown.offset().left + markdown.outerWidth() - paddingRight)
-        toc.css('right', right + 'px')
+        const paddingRight = parseFloat(getComputedStyle(markdown).paddingRight)
+
+        const windowWidth = document.body.offsetWidth
+        const markdownOffsetLeft =
+          markdown.getBoundingClientRect().left + document.body.scrollLeft
+
+        const right =
+          document.body.offsetWidth -
+          (markdownOffsetLeft + markdown.offsetWidth - paddingRight)
+
+        toc.style.right = `${right}px`
+
         //affix toc left
-        var newbool
-        var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2
+        let newbool
+
+        const rightMargin =
+          (markdown.parentElement.offsetWidth - markdown.offsetWidth) / 2
+
         //for ipad or wider device
         if (rightMargin >= 133) {
           newbool = true
-          var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2
-          var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin
-          tocAffix.css('left', left + 'px')
+          const tocAffixOuterWidth = parseFloat(
+            getComputedStyle(tocAffix).maxWidth.replace('px', ''),
+          )
+          const tocAffixWidth =
+            tocAffixOuterWidth -
+            (parseFloat(getComputedStyle(tocAffix).paddingLeft.replace('px', '')) +
+              parseFloat(getComputedStyle(tocAffix).paddingRight.replace('px', '')))
+
+          const affixLeftMargin = (tocAffixOuterWidth - tocAffixWidth) / 2
+
+          const left =
+            markdown.getBoundingClientRect().left +
+            document.body.scrollLeft +
+            markdown.offsetWidth -
+            affixLeftMargin
+
+          tocAffix.style.left = `${left}px`
         } else {
           newbool = false
         }
         if (newbool != enoughForAffixToc) {
           enoughForAffixToc = newbool
-          generateScrollspy()
+          handleTocVisibility()
         }
       }
-      $(window).resize(function () {
-        windowResize()
-      })
-      $(document).ready(function () {
-        windowResize()
-        generateScrollspy()
-      })
 
-      //remove hash
-      function removeHash() {
-        window.location.hash = ''
+      const backtotop = document.querySelectorAll('.back-to-top')
+      const gotobottom = document.querySelectorAll('.go-to-bottom')
+
+      function backtotopClick(e) {
+        e.preventDefault()
+        e.stopPropagation()
+        scrollToTop()
       }
 
-      var backtotop = $('.back-to-top')
-      var gotobottom = $('.go-to-bottom')
-
-      backtotop.click(function (e) {
+      function gotobottomClick(e) {
         e.preventDefault()
         e.stopPropagation()
-        if (scrollToTop) scrollToTop()
-        removeHash()
-      })
-      gotobottom.click(function (e) {
+        scrollToBottom()
+      }
+
+      dropdown.addEventListener('click', e => {
         e.preventDefault()
-        e.stopPropagation()
-        if (scrollToBottom) scrollToBottom()
-        removeHash()
+        console.log('drop')
+        const tocLabelExpanded = tocLabel.getAttribute('aria-expanded')
+        dropdown.classList.toggle('open')
+        tocLabel.setAttribute(
+          'aria-expanded',
+          tocLabelExpanded === 'false' ? 'true' : 'false',
+        )
       })
 
-      var toggle = $('.expand-toggle')
-      var tocExpand = false
+      tocDropdown.forEach(elm => {
+        elm.addEventListener('click', e => e.stopPropagation())
+      })
+
+      let tocExpand = false
 
       checkExpandToggle()
-      toggle.click(function (e) {
-        e.preventDefault()
-        e.stopPropagation()
-        tocExpand = !tocExpand
-        checkExpandToggle()
+
+      toggle.forEach(elm => {
+        elm.addEventListener('click', e => {
+          e.preventDefault()
+          e.stopPropagation()
+          tocExpand = !tocExpand
+          checkExpandToggle()
+        })
       })
 
       function checkExpandToggle() {
-        var toc = $('.ui-toc-dropdown .toc')
-        var toggle = $('.expand-toggle')
+        const toc = document.querySelectorAll('.ui-toc-dropdown .toc')
+        const toggle = document.querySelectorAll('.expand-toggle')
+
         if (!tocExpand) {
-          toc.removeClass('expand')
-          toggle.text('Expand all')
+          toc.forEach(elm => {
+            elm.classList.remove('expand')
+          })
+          toggle.forEach(elm => {
+            elm.textContent = 'Expand all'
+          })
         } else {
-          toc.addClass('expand')
-          toggle.text('Collapse all')
+          toc.forEach(elm => {
+            elm.classList.add('expand')
+          })
+          toggle.forEach(elm => {
+            elm.textContent = 'Collapse all'
+          })
         }
       }
 
       function scrollToTop() {
-        $('body, html').stop(true, true).animate(
-          {
-            scrollTop: 0,
-          },
-          100,
-          'linear',
-        )
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        })
       }
 
       function scrollToBottom() {
-        $('body, html')
-          .stop(true, true)
-          .animate(
-            {
-              scrollTop: $(document.body)[0].scrollHeight,
-            },
-            100,
-            'linear',
-          )
+        window.scrollTo({
+          top: document.body.offsetHeight,
+          behavior: 'smooth',
+        })
       }
+
+      function handleTocOutsideClick(e) {
+        const target = e.target
+        const ref = document.querySelector('#ui-toc')
+
+        const hasClickedOutside =
+          !(ref.contains(target) || dropdown.contains(target)) ?? false
+
+        if (tocLabel.getAttribute('aria-expanded') === 'true' && hasClickedOutside) {
+          dropdown.classList.remove('open')
+          tocLabel.setAttribute('aria-expanded', 'false')
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        handleResize()
+        handleTocVisibility()
+
+        const resizeObserver = new ResizeObserver(handleResize)
+        resizeObserver.observe(window.document.body)
+
+        backtotop.forEach(elm => elm.addEventListener('click', backtotopClick))
+        gotobottom.forEach(elm => elm.addEventListener('click', gotobottomClick))
+
+        hashElements
+          .filter(elm => !!elm.hash)
+          .forEach(elm => elm.addEventListener('click', smoothHashScroll))
+
+        document.addEventListener('click', handleTocOutsideClick)
+      })
     </script>
   </body>
 </html>
