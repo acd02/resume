@@ -51,7 +51,10 @@ import ToC from '../components/ToC.astro'
       id="stickyBottom"
       class="[grid-area:bottom] sticky bottom-0 xl:hidden"
     >
-      <div id="bottomToc" class="prose flex justify-start w-full max-w-none bg-slate-100">
+      <div
+        id="bottomToc"
+        class="prose flex flex-col justify-start w-full max-h-[80vh] overflow-y-auto max-w-none bg-slate-100"
+      >
         <ToC headings={filteredHeadings} nestedSections={['skills']} />
       </div>
       <div
