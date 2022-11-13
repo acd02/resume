@@ -5,11 +5,11 @@
   "semi": false,
   "singleQuote": true,
   "arrowParens": "avoid",
-  "htmlWhitespaceSensitivity": "ignore",
+  "htmlWhitespaceSensitivity": "css",
   "jsxBracketSameLine": false,
   "jsxSingleQuote": false,
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
-  "trailingComma": "all",
+  "trailingComma": "es5",
   "useTabs": false
 }

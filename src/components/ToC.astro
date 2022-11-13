@@ -1,0 +1,38 @@
+---
+import type { Heading } from '../types'
+import { makeToc } from '../utils'
+
+interface Props {
+  headings: Heading[]
+  nestedSections: string[]
+}
+
+const { headings, nestedSections } = Astro.props
+---
+
+<ul>
+  {
+    makeToc(headings, nestedSections).map(({ slug, text, nestedList }) => {
+      if (nestedList)
+        return (
+          <>
+            <li>
+              <a href={`#${slug}`}>{text}</a>
+            </li>
+            <ul>
+              {nestedList.map(({ slug, text }) => (
+                <li>
+                  <a href={`#${slug}`}>{text.replace(/:$/, '')}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      return (
+        <li>
+          <a href={`#${slug}`}>{text}</a>
+        </li>
+      )
+    })
+  }
+</ul>
