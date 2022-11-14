@@ -1,0 +1,30 @@
+---
+import type { ToC } from '../../types'
+
+interface Props {
+  nestedList: ToC
+  slug: string
+  text: string
+}
+
+const { nestedList, slug, text } = Astro.props
+---
+
+<>
+  <li>
+    <a href={`#${slug}`}>{text}</a>
+  </li>
+  <ul>
+    {
+      nestedList.map(({ slug, text, nestedList }) =>
+        nestedList ? (
+          <Astro.self slug={slug} text={text} nestedList={nestedList} />
+        ) : (
+          <li>
+            <a href={`#${slug}`}>{text.replace(/:$/, '')}</a>
+          </li>
+        )
+      )
+    }
+  </ul>
+</>

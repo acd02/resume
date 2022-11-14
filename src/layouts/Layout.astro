@@ -17,7 +17,7 @@ const { title } = Astro.props.frontmatter || {}
 const filteredHeadings = headings.filter(({ depth }) => depth > 2)
 
 import BookIcon from '../components/icons/Book.astro'
-import ToC from '../components/ToC.astro'
+import ToC from '../components/ToC/index.astro'
 ---
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ import ToC from '../components/ToC.astro'
             ><span class="text-lg font-semibold">table of contents</span>
           </BookIcon>
         </div>
-        <ToC headings={filteredHeadings} nestedSections={['skills']} />
+        <ToC headings={filteredHeadings} />
       </div>
     </div>
     <div
@@ -55,14 +55,14 @@ import ToC from '../components/ToC.astro'
         id="bottomToc"
         class="prose flex flex-col justify-start w-full max-h-[80vh] overflow-y-auto max-w-none bg-slate-100"
       >
-        <ToC headings={filteredHeadings} nestedSections={['skills']} />
+        <ToC headings={filteredHeadings} />
       </div>
-      <div
-        class="flex flex-col justify-center items-center text-sm py-2 cursor-pointer bg-slate-200 relative"
+      <button
+        class="flex flex-col w-full justify-center items-center text-sm py-2 bg-slate-200 relative"
       >
         <BookIcon />
         <span id="bottomText">see table of contents</span>
-      </div>
+      </button>
     </div>
   </body>
 </html>

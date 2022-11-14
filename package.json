@@ -8,16 +8,13 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prettier": "prettier --config .prettierrc.json --write \"src/**/*.{ts,tsx,astro,mdx}\""
   },
   "dependencies": {
     "@astrojs/mdx": "^0.11.6",
     "@astrojs/tailwind": "^2.1.2",
-    "@jsdevtools/rehype-toc": "3.0.2",
     "astro": "^1.6.7",
-    "rehype-autolink-headings": "6.1.1",
-    "rehype-slug": "5.1.0",
-    "remark-toc": "8.0.1",
     "tailwindcss": "^3.2.4"
   },
   "devDependencies": {

@@ -1,0 +1,26 @@
+---
+import type { Heading } from '../../types'
+import { makeToc } from '../../utils'
+import NestedList from './NestedList.astro'
+
+interface Props {
+  headings: Heading[]
+}
+
+const { headings } = Astro.props
+---
+
+<ul>
+  {
+    makeToc(headings).map(({ slug, text, nestedList }) => {
+      if (nestedList)
+        return <NestedList slug={slug} text={text} nestedList={nestedList} />
+
+      return (
+        <li>
+          <a href={`#${slug}`}>{text}</a>
+        </li>
+      )
+    })
+  }
+</ul>

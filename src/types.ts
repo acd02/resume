@@ -4,6 +4,6 @@ interface Heading {
   text: string
 }
 
-type ToC = (Heading & { nestedList?: Heading[] })[]
+type ToC = (Heading & { nestedList?: ToC })[]
 
 export type { Heading, ToC }
