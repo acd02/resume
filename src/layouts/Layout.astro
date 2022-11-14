@@ -68,6 +68,80 @@ import ToC from '../components/ToC/index.astro'
 </html>
 
 <script>
+  type ThrottleParams = {
+    leading?: boolean
+    trailing?: boolean
+  }
+
+  function throttle(
+    func: Function,
+    wait: number,
+    options: ThrottleParams = { leading: true, trailing: true }
+  ): () => void {
+    const context = null
+
+    let args: IArguments | null
+    let result: unknown
+    let timeout: number | undefined | null
+    let previous = 0
+
+    const later = function () {
+      previous = options.leading === false ? 0 : Date.now()
+      timeout = null
+      result = func.apply(context, args)
+      if (!timeout) args = null
+    }
+
+    return function () {
+      const now = Date.now()
+      if (!previous && options.leading === false) previous = now
+      const remaining = wait - (now - previous)
+      args = arguments
+      if (remaining <= 0 || remaining > wait) {
+        if (timeout) {
+          clearTimeout(timeout as number)
+          timeout = null
+        }
+        previous = now
+        result = func.apply(context, args)
+        if (!timeout) args = null
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining)
+      }
+
+      return result
+    }
+  }
+
+  function partition<T>(as: T[], predicate: (value: T) => boolean): [T[], T[]] {
+    const truthies: T[] = []
+    const falseys: T[] = []
+
+    as.forEach(a => {
+      if (predicate(a)) truthies.push(a)
+      else falseys.push(a)
+    })
+
+    return [truthies, falseys]
+  }
+
+  function getCumulativeOffset(element?: HTMLElement) {
+    let top = 0,
+      left = 0
+
+    if (!element) return { top, left }
+    do {
+      top += element.offsetTop || 0
+      left += element.offsetLeft || 0
+      element = element.offsetParent as HTMLElement
+    } while (element)
+
+    return {
+      top,
+      left,
+    }
+  }
+
   const stickyBottomElm = document.getElementById('stickyBottom') as HTMLDivElement | null
   const bottomTocElm = document.getElementById('bottomToc') as HTMLDivElement | null
   const bottomTextElm = document.getElementById('bottomText') as HTMLDivElement | null
@@ -87,6 +161,49 @@ import ToC from '../components/ToC/index.astro'
   if (stickyBottomElm) {
     stickyBottomElm.addEventListener('click', handleStickyBottomClick)
   }
+
+  const headerDetails: { top: number; elm: HTMLElement }[] = []
+  const tocMapper: Record<string, HTMLAnchorElement[]> = {}
+
+  document.querySelectorAll('h3, h4, h5, h6').forEach(header => {
+    const { top } = getCumulativeOffset(header as HTMLElement)
+    headerDetails.push({ top, elm: header as HTMLElement })
+  })
+
+  headerDetails.sort(({ top: aTop }, { top: bTop }) => aTop - bTop)
+
+  document.querySelectorAll('ul.toc').forEach(toc => {
+    const links = toc.querySelectorAll('[href]')
+    links.forEach(link => {
+      const [, href = ''] = (link as HTMLAnchorElement).href.split('#')
+
+      tocMapper[href] = [...(tocMapper[href] ?? []), link as HTMLAnchorElement]
+    })
+  })
+
+  function handleScroll(_event: Event) {
+    const threshold = 60
+    const [activeHeaders, inactiveHeaders] = partition(
+      headerDetails,
+      ({ top }) => top - threshold < window.scrollY
+    )
+
+    activeHeaders.forEach(({ elm }) =>
+      tocMapper[elm.id]?.forEach(link => {
+        link.classList.add('active')
+      })
+    )
+
+    inactiveHeaders.forEach(({ elm }) =>
+      tocMapper[elm.id]?.forEach(link => {
+        link.classList.remove('active')
+      })
+    )
+  }
+
+  const throttledHandleScroll = throttle(handleScroll, 200)
+
+  window.addEventListener('scroll', throttledHandleScroll, { passive: true })
 </script>
 
 <style is:global>

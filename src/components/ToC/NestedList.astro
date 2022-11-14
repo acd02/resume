@@ -28,3 +28,10 @@ const { nestedList, slug, text } = Astro.props
     }
   </ul>
 </>
+
+<style>
+  li:has(.active) > a {
+    transition: color 0.25s ease-out;
+    @apply text-purple-500;
+  }
+</style>

@@ -10,7 +10,7 @@ interface Props {
 const { headings } = Astro.props
 ---
 
-<ul>
+<ul class="toc">
   {
     makeToc(headings).map(({ slug, text, nestedList }) => {
       if (nestedList)
@@ -24,3 +24,10 @@ const { headings } = Astro.props
     })
   }
 </ul>
+
+<style>
+  li:has(.active) > a {
+    transition: color 0.25s ease-out;
+    @apply text-purple-500;
+  }
+</style>
