@@ -125,85 +125,73 @@ import ToC from '../components/ToC/index.astro'
     return [truthies, falseys]
   }
 
-  function getCumulativeOffset(element?: HTMLElement) {
-    let top = 0,
-      left = 0
+  window.addEventListener('load', () => {
+    const stickyBottomElm = document.getElementById(
+      'stickyBottom'
+    ) as HTMLDivElement | null
+    const bottomTocElm = document.getElementById('bottomToc') as HTMLDivElement | null
+    const bottomTextElm = document.getElementById('bottomText') as HTMLDivElement | null
 
-    if (!element) return { top, left }
-    do {
-      top += element.offsetTop || 0
-      left += element.offsetLeft || 0
-      element = element.offsetParent as HTMLElement
-    } while (element)
+    function handleStickyBottomClick() {
+      if (!stickyBottomElm || !bottomTocElm || !bottomTextElm) return
 
-    return {
-      top,
-      left,
+      const newDatasetValue =
+        stickyBottomElm.dataset.status === 'closed' ? 'open' : 'closed'
+      stickyBottomElm.dataset.status = newDatasetValue
+
+      bottomTocElm.classList.toggle('fadeInUp')
+      bottomTextElm.textContent =
+        newDatasetValue === 'open' ? 'close table of contents' : 'see table of contents'
     }
-  }
 
-  const stickyBottomElm = document.getElementById('stickyBottom') as HTMLDivElement | null
-  const bottomTocElm = document.getElementById('bottomToc') as HTMLDivElement | null
-  const bottomTextElm = document.getElementById('bottomText') as HTMLDivElement | null
+    if (stickyBottomElm) {
+      stickyBottomElm.addEventListener('click', handleStickyBottomClick)
+    }
 
-  function handleStickyBottomClick() {
-    if (!stickyBottomElm || !bottomTocElm || !bottomTextElm) return
+    const headerDetails: { top: number; elm: HTMLElement }[] = []
+    const tocMapper: Record<string, HTMLAnchorElement[]> = {}
 
-    const newDatasetValue =
-      stickyBottomElm.dataset.status === 'closed' ? 'open' : 'closed'
-    stickyBottomElm.dataset.status = newDatasetValue
+    document.querySelectorAll('h3, h4, h5, h6').forEach(header => {
+      const top = window.scrollY + header.getBoundingClientRect().top
 
-    bottomTocElm.classList.toggle('fadeInUp')
-    bottomTextElm.textContent =
-      newDatasetValue === 'open' ? 'close table of contents' : 'see table of contents'
-  }
-
-  if (stickyBottomElm) {
-    stickyBottomElm.addEventListener('click', handleStickyBottomClick)
-  }
-
-  const headerDetails: { top: number; elm: HTMLElement }[] = []
-  const tocMapper: Record<string, HTMLAnchorElement[]> = {}
-
-  document.querySelectorAll('h3, h4, h5, h6').forEach(header => {
-    const { top } = getCumulativeOffset(header as HTMLElement)
-    headerDetails.push({ top, elm: header as HTMLElement })
-  })
-
-  headerDetails.sort(({ top: aTop }, { top: bTop }) => aTop - bTop)
-
-  document.querySelectorAll('ul.toc').forEach(toc => {
-    const links = toc.querySelectorAll('[href]')
-    links.forEach(link => {
-      const [, href = ''] = (link as HTMLAnchorElement).href.split('#')
-
-      tocMapper[href] = [...(tocMapper[href] ?? []), link as HTMLAnchorElement]
+      headerDetails.push({ top, elm: header as HTMLElement })
     })
+
+    headerDetails.sort(({ top: aTop }, { top: bTop }) => aTop - bTop)
+
+    document.querySelectorAll('ul.toc').forEach(toc => {
+      const links = toc.querySelectorAll('[href]')
+      links.forEach(link => {
+        const [, href = ''] = (link as HTMLAnchorElement).href.split('#')
+
+        tocMapper[href] = [...(tocMapper[href] ?? []), link as HTMLAnchorElement]
+      })
+    })
+
+    function handleScroll(_event: Event) {
+      const threshold = 60
+      const [activeHeaders, inactiveHeaders] = partition(
+        headerDetails,
+        ({ top }) => top - threshold < window.scrollY
+      )
+
+      activeHeaders.forEach(({ elm }) =>
+        tocMapper[elm.id]?.forEach(link => {
+          link.classList.add('active')
+        })
+      )
+
+      inactiveHeaders.forEach(({ elm }) =>
+        tocMapper[elm.id]?.forEach(link => {
+          link.classList.remove('active')
+        })
+      )
+    }
+
+    const throttledHandleScroll = throttle(handleScroll, 200)
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true })
   })
-
-  function handleScroll(_event: Event) {
-    const threshold = 60
-    const [activeHeaders, inactiveHeaders] = partition(
-      headerDetails,
-      ({ top }) => top - threshold < window.scrollY
-    )
-
-    activeHeaders.forEach(({ elm }) =>
-      tocMapper[elm.id]?.forEach(link => {
-        link.classList.add('active')
-      })
-    )
-
-    inactiveHeaders.forEach(({ elm }) =>
-      tocMapper[elm.id]?.forEach(link => {
-        link.classList.remove('active')
-      })
-    )
-  }
-
-  const throttledHandleScroll = throttle(handleScroll, 200)
-
-  window.addEventListener('scroll', throttledHandleScroll, { passive: true })
 </script>
 
 <style is:global>
