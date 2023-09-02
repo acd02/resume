@@ -71,11 +71,9 @@ import ToC from '../components/ToC/index.astro'
   import { throttle, partition } from './utils'
 
   window.addEventListener('load', () => {
-    const stickyBottomElm = document.getElementById(
-      'stickyBottom'
-    ) as HTMLDivElement | null
-    const bottomTocElm = document.getElementById('bottomToc') as HTMLDivElement | null
-    const bottomTextElm = document.getElementById('bottomText') as HTMLDivElement | null
+    const stickyBottomElm = document.getElementById('stickyBottom')
+    const bottomTocElm = document.getElementById('bottomToc')
+    const bottomTextElm = document.getElementById('bottomText')
 
     function handleStickyBottomClick() {
       if (!stickyBottomElm || !bottomTocElm || !bottomTextElm) return
@@ -89,9 +87,7 @@ import ToC from '../components/ToC/index.astro'
         newDatasetValue === 'open' ? 'close table of contents' : 'see table of contents'
     }
 
-    if (stickyBottomElm) {
-      stickyBottomElm.addEventListener('click', handleStickyBottomClick)
-    }
+    stickyBottomElm?.addEventListener('click', handleStickyBottomClick)
 
     const headerDetails: { top: number; elm: HTMLElement }[] = []
     const tocLookup: Record<string, HTMLAnchorElement[]> = {}

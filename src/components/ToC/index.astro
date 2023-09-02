@@ -2,12 +2,14 @@
 import type { Heading } from '../../types'
 import { makeToc } from '../../utils'
 import NestedList from './NestedList.astro'
+import { cx } from 'class-variance-authority'
 
 interface Props {
   headings: Heading[]
 }
 
 const { headings } = Astro.props
+const linkStyles = cx('[&:is(.active)]:text-purple-600 [transition:color_0.25s_ease-out]')
 ---
 
 <ul class="toc">
@@ -18,16 +20,11 @@ const { headings } = Astro.props
 
       return (
         <li>
-          <a href={`#${slug}`}>{text}</a>
+          <a class={linkStyles} href={`#${slug}`}>
+            {text}
+          </a>
         </li>
       )
     })
   }
 </ul>
-
-<style>
-  li:has(.active) > a {
-    transition: color 0.25s ease-out;
-    @apply text-purple-500;
-  }
-</style>
