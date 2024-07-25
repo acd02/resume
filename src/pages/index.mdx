@@ -4,7 +4,7 @@ title: acd's resume
 ---
 
 import MailIcon from '../components/icons/Mail.astro'
-import CubeIcon from '../components/icons/Cube.astro'
+import BoltIcon from '../components/icons/Bolt.astro'
 import CodeIcon from '../components/icons/Code.astro'
 import IdIcon from '../components/icons/Id.astro'
 import PencilIcon from '../components/icons/Pencil.astro'
@@ -21,7 +21,7 @@ import AcademicIcon from '../components/icons/Academic.astro'
 <div class="flex flex-col gap-y-4">
   <MailIcon>alex.acd02@gmail.com</MailIcon>
   <CodeIcon>https://github.com/acd02</CodeIcon>
-  <CubeIcon>[codesandbox](https://codesandbox.io/u/acd02/sandboxes)</CubeIcon>
+  <BoltIcon>[stackblitz](https://stackblitz.com/@acd02/collections)</BoltIcon>
   <PlayIcon>current position @[leboncoin](https://www.leboncoin.fr/)</PlayIcon>
 </div>
 
@@ -32,12 +32,11 @@ import AcademicIcon from '../components/icons/Academic.astro'
 Mostly, I build user interfaces, whether it be for single page apps, or traditional websites.
 
 I like using design systems (because it's just easier to maintain and it scales better).
+I actually work on [one](https://sparkui.vercel.app/?path=/docs/getting-started--docs) at my current company
 
-Can't say I'm having a blast while writing tests 😅, but I know they're valuable, and on a regular basis, they actually help me catch stuff that otherwise would've make their way into prod 💣.
+When it comes to testing, writing them sure isn't always a walk in the park, but I know they're valuable. On a regular basis, they actually help me catch mistakes before they go live 💣.
 
-When I say _stuff_, I'm not necessarily talking about runtime errors, but also unhandled edge cases and whatnot.
-
-And those can show up fast ⚡️ when doing some refactoring or simply when a lot of people interact with the codebase.
+Mistakes or regressions, and those can show up fast when doing some refactoring or simply when a lot of people interact with the codebase.
 
 ### <WrenchIcon>Skills</WrenchIcon>
 
@@ -51,13 +50,13 @@ And those can show up fast ⚡️ when doing some refactoring or simply when a l
   - SCSS, Less, Stylus
   - CSS Modules
   - Tailwind
-  - CSS-in-JS (Stitches, Emotion, styled-component...)
+  - CSS-in-JS (Stitches, Emotion, styled-components...)
 
 - #### **JS:**
 
   - TypeScript
   - ES6 & beyond
-  - [Flux-like architectures](https://facebook.github.io/flux/docs/in-depth-overview/)
+  - [Flux-like architectures](https://facebookarchive.github.io/flux/docs/in-depth-overview/)
   - Functional programming (as far as JS goes 😊)
   - State machines ([XState](https://xstate.js.org/docs/), [Robot](https://thisrobot.life/))
 
@@ -65,17 +64,19 @@ And those can show up fast ⚡️ when doing some refactoring or simply when a l
 
   - Node.js / Express / [Hapi](https://hapi.dev/)
 
-- #### **Libs:**
+- #### **Libs / Frameworks:**
 
   - React:
     - Next.js
-  - Lodash / Ramda (but I favor 🍦)
-  - ~[fp-ts](https://gcanti.github.io/fp-ts/)~ (great if you wish to improve your fp skills, but let's be honest, it makes your code so convoluted it hurts 🤕)
+  - Astro
+  - Lodash / Ramda (but I don't really use them anymore, as I favor 🍦)
+  - ~[fp-ts](https://gcanti.github.io/fp-ts/)~ (great if you wish to improve your fp skills, but let's be honest, it makes your code painfully convoluted 🤕)
 
 - #### **Testing:**
 
-  - Jest
+  - Jest / Vitest
   - [Testing Library](https://testing-library.com/)
+  - Playwright
 
 - #### **Workflow:**
   - Versioning:
