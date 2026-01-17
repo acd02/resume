@@ -13,16 +13,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.19.6",
-    "@astrojs/tailwind": "4.0.0",
-    "astro": "^2.10.5",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.16.11",
     "tailwindcss": "3.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.8",
+    "@tailwindcss/typography": "^0.5.19",
     "class-variance-authority": "0.7.0",
-    "prettier": "3.0.1",
-    "prettier-plugin-astro": "^0.11.0",
-    "typescript": "5.1.6"
+    "prettier": "3.8.0",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "5.9.3"
   }
 }
