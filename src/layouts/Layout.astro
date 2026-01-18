@@ -37,30 +37,32 @@ import '../styles/global.css'
       <slot />
     </main>
     <div class="prose toc [grid-area:right] hidden xl:block">
-      <div
+      <nav
         class="sticky xl:top-4 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-700/40 shadow-lg"
       >
         <div class="border border-purple-200 px-2 py-1 inline-block rounded-lg">
-          <BookIcon>
-            <span class="text-lg font-semibold">table of contents</span>
+          <BookIcon wrapper='div' >
+            <h3 class="text-lg font-semibold not-prose">table of contents</h3>
           </BookIcon>
         </div>
         <ToC headings={filteredHeadings} />
-      </div>
+      </nav>
     </div>
     <div
       data-status="closed"
       id="stickyBottom"
       class="[grid-area:bottom] sticky bottom-0 xl:hidden"
     >
-      <div
+      <nav
         id="bottomToc"
         class="prose flex flex-col justify-start w-full max-h-[80vh] overflow-y-auto max-w-none bg-slate-100"
+        hidden
       >
-        <ToC headings={filteredHeadings} />
-      </div>
+        <ToC mode="mobile" headings={filteredHeadings} />
+      </nav>
       <button
-        class="flex flex-col w-full justify-center items-center text-sm py-2 bg-slate-200 relative"
+        class="flex flex-col w-full justify-center items-center text-sm py-2 bg-slate-200 relative cursor-pointer"
+        aria-pressed="false"
       >
         <BookIcon />
         <span id="bottomText">see table of contents</span>
@@ -76,6 +78,10 @@ import '../styles/global.css'
     const stickyBottomElm = document.getElementById('stickyBottom')
     const bottomTocElm = document.getElementById('bottomToc')
     const bottomTextElm = document.getElementById('bottomText')
+    const bottomButton = document.querySelector('button:has(#bottomText)')
+    const mobileFirstNavItem = document.querySelector<HTMLAnchorElement>(
+      '#mobile-first-nav-item'
+    )
 
     function handleStickyBottomClick() {
       if (!stickyBottomElm || !bottomTocElm || !bottomTextElm) return
@@ -83,6 +89,18 @@ import '../styles/global.css'
       const newDatasetValue =
         stickyBottomElm.dataset.status === 'closed' ? 'open' : 'closed'
       stickyBottomElm.dataset.status = newDatasetValue
+
+      {
+        /* handling table of content on mobile */
+        if (newDatasetValue === 'open') {
+          bottomTocElm.removeAttribute('hidden')
+          mobileFirstNavItem?.focus()
+          bottomButton?.setAttribute('aria-pressed', 'true')
+        } else {
+          bottomTocElm.setAttribute('hidden', '')
+          bottomButton?.setAttribute('aria-pressed', 'false')
+        }
+      }
 
       bottomTocElm.classList.toggle('fadeInUp')
       bottomTextElm.textContent =
@@ -140,6 +158,10 @@ import '../styles/global.css'
 <style is:global>
   [id] {
     scroll-margin-top: 1.5rem;
+  }
+
+  .toc > li:has(> ul)::marker {
+    color: transparent;
   }
 </style>
 

@@ -6,21 +6,28 @@ import { cx } from 'class-variance-authority'
 
 interface Props {
   headings: Heading[]
+  mode?: 'mobile' | 'desktop'
 }
 
-const { headings } = Astro.props
+const { headings, mode = 'desktop' } = Astro.props
 const linkStyles = cx('[&:is(.active)]:text-purple-600 [transition:color_0.25s_ease-out]')
 ---
 
 <ul class="toc">
   {
-    makeToc(headings).map(({ slug, text, nestedList }) => {
+    makeToc(headings).map(({ slug, text, nestedList }, index) => {
       if (nestedList)
         return <NestedList slug={slug} text={text} nestedList={nestedList} />
 
       return (
         <li>
-          <a class={linkStyles} href={`#${slug}`}>
+          <a
+            {...(index === 0 && {
+              id: `${mode}-first-nav-item`,
+            })}
+            class={linkStyles}
+            href={`#${slug}`}
+          >
             {text}
           </a>
         </li>

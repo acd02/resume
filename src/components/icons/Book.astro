@@ -1,5 +1,15 @@
-<div class="flex items-center gap-x-1">
+---
+interface Props {
+  wrapper?: 'span' | 'div'
+}
+
+const { wrapper: Wrapper = 'span' } = Astro.props
+const InnerWrapper = Wrapper
+---
+
+<Wrapper class="flex items-center gap-x-1">
   <svg
+    aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -15,7 +25,7 @@
     ></path>
   </svg>
 
-  <div>
+  <InnerWrapper>
     <slot />
-  </div>
-</div>
+  </InnerWrapper>
+</Wrapper>
