@@ -62,7 +62,8 @@ import '../styles/global.css'
       </nav>
       <button
         class="flex flex-col w-full justify-center items-center text-sm py-2 bg-slate-200 relative cursor-pointer"
-        aria-pressed="false"
+        aria-expanded="false"
+        aria-controls="stickyBottom"
       >
         <BookIcon />
         <span id="bottomText">see table of contents</span>
@@ -95,10 +96,10 @@ import '../styles/global.css'
         if (newDatasetValue === 'open') {
           bottomTocElm.removeAttribute('hidden')
           mobileFirstNavItem?.focus()
-          bottomButton?.setAttribute('aria-pressed', 'true')
+          bottomButton?.setAttribute('aria-expanded', 'true')
         } else {
           bottomTocElm.setAttribute('hidden', '')
-          bottomButton?.setAttribute('aria-pressed', 'false')
+          bottomButton?.setAttribute('aria-expanded', 'false')
         }
       }
 
