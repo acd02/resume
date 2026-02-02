@@ -3,7 +3,6 @@ export interface Props {
   frontmatter?: {
     title: string
   }
-  title: string
   headings: {
     depth: number
     slug: string
@@ -41,7 +40,7 @@ import '../styles/global.css'
         class="sticky xl:top-4 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-700/40 shadow-lg"
       >
         <div class="border border-purple-200 px-2 py-1 inline-block rounded-lg">
-          <BookIcon wrapper='div' >
+          <BookIcon wrapper="div">
             <h3 class="text-lg font-semibold not-prose">table of contents</h3>
           </BookIcon>
         </div>
@@ -56,18 +55,18 @@ import '../styles/global.css'
       <nav
         id="bottomToc"
         class="prose flex flex-col justify-start w-full max-h-[80vh] overflow-y-auto max-w-none bg-slate-100"
-        hidden
       >
-        <ToC mode="mobile" headings={filteredHeadings} />
+        <ToC mode="mobile" id="bottomTocList" headings={filteredHeadings} />
+
+        <button
+          class="flex flex-col w-full justify-center items-center text-sm py-2 bg-slate-200 relative cursor-pointer"
+          aria-expanded="false"
+          aria-controls="bottomToc"
+        >
+          <BookIcon />
+          <span id="bottomText">see table of contents</span>
+        </button>
       </nav>
-      <button
-        class="flex flex-col w-full justify-center items-center text-sm py-2 bg-slate-200 relative cursor-pointer"
-        aria-expanded="false"
-        aria-controls="stickyBottom"
-      >
-        <BookIcon />
-        <span id="bottomText">see table of contents</span>
-      </button>
     </div>
   </body>
 </html>
@@ -78,6 +77,7 @@ import '../styles/global.css'
   window.addEventListener('load', () => {
     const stickyBottomElm = document.getElementById('stickyBottom')
     const bottomTocElm = document.getElementById('bottomToc')
+    const bottomTocListElm = document.getElementById('bottomTocList')
     const bottomTextElm = document.getElementById('bottomText')
     const bottomButton = document.querySelector('button:has(#bottomText)')
     const mobileFirstNavItem = document.querySelector<HTMLAnchorElement>(
@@ -85,7 +85,7 @@ import '../styles/global.css'
     )
 
     function handleStickyBottomClick() {
-      if (!stickyBottomElm || !bottomTocElm || !bottomTextElm) return
+      if (!stickyBottomElm || !bottomTocElm || !bottomTocListElm || !bottomTextElm) return
 
       const newDatasetValue =
         stickyBottomElm.dataset.status === 'closed' ? 'open' : 'closed'
@@ -94,16 +94,14 @@ import '../styles/global.css'
       {
         /* handling table of content on mobile */
         if (newDatasetValue === 'open') {
-          bottomTocElm.removeAttribute('hidden')
           mobileFirstNavItem?.focus()
           bottomButton?.setAttribute('aria-expanded', 'true')
         } else {
-          bottomTocElm.setAttribute('hidden', '')
           bottomButton?.setAttribute('aria-expanded', 'false')
         }
       }
 
-      bottomTocElm.classList.toggle('fadeInUp')
+      bottomTocListElm.classList.toggle('fadeInUp')
       bottomTextElm.textContent =
         newDatasetValue === 'open' ? 'close table of contents' : 'see table of contents'
     }
@@ -164,9 +162,15 @@ import '../styles/global.css'
   .toc > li:has(> ul)::marker {
     color: transparent;
   }
-</style>
 
-<style>
+  #stickyBottom[data-status='open'] ul {
+    display: block;
+  }
+
+  #stickyBottom[data-status='closed'] ul {
+    display: none;
+  }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -182,7 +186,9 @@ import '../styles/global.css'
   .fadeInUp {
     animation: fadeInUp 0.25s ease-out forwards;
   }
+</style>
 
+<style>
   html {
     scroll-behavior: smooth;
   }
@@ -194,10 +200,5 @@ import '../styles/global.css'
       'bottom bottom bottom';
 
     grid-template-columns: minmax(0px, 1fr) minmax(auto, 768px) minmax(0px, 1fr);
-  }
-
-  #stickyBottom[data-status='closed'] #bottomToc {
-    opacity: 0;
-    height: 0;
   }
 </style>
