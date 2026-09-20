@@ -1,5 +1,5 @@
 # My resume
 
-Made with [Fresh](https://fresh.deno.dev/)
+Made with [Astro](https://astro.build/)
 
-Live: https://resume.acd02.deno.net
+Live: https://acd02-resume.netlify.app
