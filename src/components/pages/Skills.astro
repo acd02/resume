@@ -1,0 +1,106 @@
+---
+import LabeledItem from "../LabeledItem.astro";
+---
+
+<div class="space-y-20">
+  <LabeledItem title="HTML">
+    <p class="text-sm text-zinc-600 dark:text-zinc-400">N/A</p>
+  </LabeledItem>
+
+  <LabeledItem title="CSS">
+    <ul class="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
+      <li>PostCSS</li>
+      <li>SCSS, Less, Stylus</li>
+      <li>CSS Modules</li>
+      <li>Tailwind</li>
+      <li>CSS-in-JS (Stitches, Emotion, styled-components…)</li>
+    </ul>
+  </LabeledItem>
+
+  <LabeledItem title="JS">
+    <ul class="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
+      <li>TypeScript</li>
+      <li>ES6 &amp; beyond</li>
+      <li>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://facebookarchive.github.io/flux/docs/in-depth-overview/"
+          class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline"
+        >Flux-like architectures</a>
+      </li>
+      <li>Functional programming (as far as JS goes)</li>
+    </ul>
+    <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+      State machines (
+      <a
+        rel="noopener noreferrer"
+        target="_blank"
+        href="https://xstate.js.org/docs/"
+        class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline"
+      >XState</a>,
+      <a
+        rel="noopener noreferrer"
+        target="_blank"
+        href="https://thisrobot.life/"
+        class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline"
+      > Robot</a>)
+    </p>
+  </LabeledItem>
+
+  <LabeledItem title="Libs / Frameworks">
+    <ul class="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
+      <li><a rel="noopener noreferrer" target="_blank" href="https://react.dev/" class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline">React</a></li>
+      <li><a rel="noopener noreferrer" target="_blank" href="https://nextjs.org/" class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline">Next.js</a></li>
+      <li><a rel="noopener noreferrer" target="_blank" href="https://astro.build/" class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline">Astro</a></li>
+      <li><a rel="noopener noreferrer" target="_blank" href="https://tanstack.com/query/latest" class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline">TanStack Query</a></li>
+      <li><a rel="noopener noreferrer" target="_blank" href="https://zagjs.com/" class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline">Zag</a></li>
+      <li><a rel="noopener noreferrer" target="_blank" href="https://valtio.dev/" class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline">Valtio</a></li>
+    </ul>
+  </LabeledItem>
+
+  <LabeledItem title="Back-end">
+    <p class="text-sm text-zinc-600 dark:text-zinc-400">
+      Node.js / Express /
+      <a
+        rel="noopener noreferrer"
+        target="_blank"
+        href="https://hapi.dev/"
+        class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline"
+      > Hapi</a>
+    </p>
+  </LabeledItem>
+
+  <LabeledItem title="Testing">
+    <ul class="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
+      <li>Jest / Vitest</li>
+      <li><a rel="noopener noreferrer" target="_blank" href="https://testing-library.com/" class="text-violet-600 hover:text-violet-700 transition dark:text-violet-400 dark:hover:text-violet-300 underline">Testing Library</a></li>
+      <li>Playwright</li>
+    </ul>
+  </LabeledItem>
+
+  <LabeledItem title="Workflow">
+    <div class="space-y-4 text-sm text-zinc-600 dark:text-zinc-400">
+      <div>
+        <p class="font-medium text-zinc-700 dark:text-zinc-300">Versioning</p>
+        <p>git</p>
+      </div>
+      <div>
+        <p class="font-medium text-zinc-700 dark:text-zinc-300">Tooling</p>
+        <p>Webpack, Prettier, eslint, Vite</p>
+      </div>
+      <div>
+        <p class="font-medium text-zinc-700 dark:text-zinc-300">Tracking</p>
+        <p>Jira</p>
+      </div>
+      <div>
+        <p class="font-medium text-zinc-700 dark:text-zinc-300">Design</p>
+        <p>Figma / <del>Sketch</del></p>
+      </div>
+      <div>
+        <p class="font-medium text-zinc-700 dark:text-zinc-300">Methodology</p>
+        <p>Agile</p>
+      </div>
+    </div>
+  </LabeledItem>
+</div>

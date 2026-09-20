@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from "astro:content";
+import Link from "@lucide/astro/icons/link";
+
+const experiences = await getCollection("experience");
+const sorted = experiences.sort((a, b) => a.data.order - b.data.order);
+
+const entries = await Promise.all(
+  sorted.map(async (exp) => {
+    const { Content } = await render(exp);
+    return { data: exp.data, Content };
+  })
+);
+---
+
+<ul role="list" class="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+  {entries.map(({ data, Content }) => (
+    <li class="group relative flex flex-col items-start">
+      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 overflow-hidden dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+        {data.logo ? (
+          <img src={data.logo} alt="" class="h-20 w-20 object-contain" />
+        ) : (
+          <span class="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+            {data.initials}
+          </span>
+        )}
+      </div>
+      <h2 class="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
+        <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/50" />
+        <span class="relative z-10">{data.company}</span>
+      </h2>
+      <p class="relative z-10 mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+        {data.title} · {data.start} — {data.end}
+      </p>
+      <div class="relative z-10 my-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <Content />
+      </div>
+      {data.link && (
+        <p class="relative z-10 mt-auto flex items-center text-sm font-medium text-zinc-400 transition group-hover:text-violet-700 dark:text-zinc-200 dark:group-hover:text-violet-400">
+          <Link size={16} class="flex-none" />
+          <a href={data.link.href} class="ml-2">{data.link.label}</a>
+        </p>
+      )}
+    </li>
+  ))}
+</ul>
