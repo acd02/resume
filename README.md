@@ -1,6 +1,5 @@
 # My resume
 
-Made with:
+Made with [Fresh](https://fresh.deno.dev/)
 
-- [Astro](https://astro.build/)
-- [Tailwind](https://tailwindcss.com/)
+Live: https://resume.acd02.deno.net

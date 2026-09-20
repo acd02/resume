@@ -1,0 +1,58 @@
+---
+import "../styles/global.css";
+import About from "../components/pages/About.astro";
+import Skills from "../components/pages/Skills.astro";
+import Experience from "../components/pages/Experience.astro";
+import Education from "../components/pages/Education.astro";
+---
+
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV — Alexandre Cadiot</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <div class="cv-page mx-auto max-w-3xl px-8 py-12">
+      <section class="mb-12">
+        <h1 class="text-3xl font-bold tracking-tight text-zinc-800">
+          Alexandre Cadiot
+        </h1>
+        <p class="mt-1 text-base text-zinc-500">Staff Frontend Engineer</p>
+        <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-zinc-500">
+          <a href="mailto:alex.acd02@gmail.com">alex.acd02@gmail.com</a>
+          <a href="https://github.com/acd02">github.com/acd02</a>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="mb-4 text-sm font-semibold uppercase tracking-widest text-zinc-400">
+          About
+        </h2>
+        <About />
+      </section>
+
+      <section class="mb-12">
+        <h2 class="mb-6 text-sm font-semibold uppercase tracking-widest text-zinc-400">
+          Experience
+        </h2>
+        <Experience />
+      </section>
+
+      <section class="mb-12">
+        <h2 class="mb-6 text-sm font-semibold uppercase tracking-widest text-zinc-400">
+          Skills
+        </h2>
+        <Skills />
+      </section>
+
+      <section>
+        <h2 class="mb-6 text-sm font-semibold uppercase tracking-widest text-zinc-400">
+          Education
+        </h2>
+        <Education />
+      </section>
+    </div>
+  </body>
+</html>

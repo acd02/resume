@@ -1,204 +1,40 @@
 ---
-export interface Props {
-  frontmatter?: {
-    title: string
-  }
-  headings: {
-    depth: number
-    slug: string
-    text: string
-  }[]
+import { ClientRouter } from "astro:transitions";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
 }
 
-const { headings } = Astro.props
-const { title } = Astro.props.frontmatter || {}
-
-const filteredHeadings = headings.filter(({ depth }) => depth > 2)
-
-import BookIcon from '../components/icons/Book.astro'
-import ToC from '../components/ToC/index.astro'
-
-import '../styles/global.css'
+const { title, description, noindex = false } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="en">
+<html lang="en" class="h-full antialiased">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Alexandre CADIOT, senior front-end developer" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {noindex && <meta name="robots" content="noindex" />}
+    <ClientRouter />
   </head>
-  <body class="xl:p-4">
-    <main class="prose p-4 xl:p-0 mb-10 [grid-area:main]">
-      <slot />
-    </main>
-    <div class="prose toc [grid-area:right] hidden xl:block">
-      <nav
-        class="sticky xl:top-4 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-700/40 shadow-lg"
-      >
-        <div class="border border-purple-200 px-2 py-1 inline-block rounded-lg">
-          <BookIcon wrapper="div">
-            <h3 class="text-lg font-semibold not-prose">table of contents</h3>
-          </BookIcon>
-        </div>
-        <ToC headings={filteredHeadings} />
-      </nav>
+  <body class="flex h-full bg-zinc-50 dark:bg-black">
+    <div class="fixed inset-0 flex justify-center sm:px-8 print:hidden">
+      <div class="flex w-full max-w-7xl lg:px-8">
+        <div class="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
+      </div>
     </div>
-    <div
-      data-status="closed"
-      id="stickyBottom"
-      class="[grid-area:bottom] sticky bottom-0 xl:hidden"
-    >
-      <nav
-        id="bottomToc"
-        class="prose flex flex-col justify-start w-full max-h-[80vh] overflow-y-auto max-w-none bg-slate-100"
-      >
-        <ToC mode="mobile" id="bottomTocList" headings={filteredHeadings} />
-
-        <button
-          class="flex flex-col w-full justify-center items-center text-sm py-2 bg-slate-200 relative cursor-pointer"
-          aria-expanded="false"
-          aria-controls="bottomToc"
-        >
-          <BookIcon />
-          <span id="bottomText">see table of contents</span>
-        </button>
-      </nav>
+    <div class="relative flex w-full flex-col">
+      <Header pathname={Astro.url.pathname} />
+      <main class="flex-auto">
+        <slot />
+      </main>
+      <Footer />
     </div>
   </body>
 </html>
-
-<script>
-  import { throttle, partition } from './utils'
-
-  window.addEventListener('load', () => {
-    const stickyBottomElm = document.getElementById('stickyBottom')
-    const bottomTocElm = document.getElementById('bottomToc')
-    const bottomTocListElm = document.getElementById('bottomTocList')
-    const bottomTextElm = document.getElementById('bottomText')
-    const bottomButton = document.querySelector('button:has(#bottomText)')
-    const mobileFirstNavItem = document.querySelector<HTMLAnchorElement>(
-      '#mobile-first-nav-item'
-    )
-
-    function handleStickyBottomClick() {
-      if (!stickyBottomElm || !bottomTocElm || !bottomTocListElm || !bottomTextElm) return
-
-      const newDatasetValue =
-        stickyBottomElm.dataset.status === 'closed' ? 'open' : 'closed'
-      stickyBottomElm.dataset.status = newDatasetValue
-
-      {
-        /* handling table of content on mobile */
-        if (newDatasetValue === 'open') {
-          mobileFirstNavItem?.focus()
-          bottomButton?.setAttribute('aria-expanded', 'true')
-        } else {
-          bottomButton?.setAttribute('aria-expanded', 'false')
-        }
-      }
-
-      bottomTocListElm.classList.toggle('fadeInUp')
-      bottomTextElm.textContent =
-        newDatasetValue === 'open' ? 'close table of contents' : 'see table of contents'
-    }
-
-    stickyBottomElm?.addEventListener('click', handleStickyBottomClick)
-
-    const headerDetails: { top: number; elm: HTMLElement }[] = []
-    const tocLookup: Record<string, HTMLAnchorElement[]> = {}
-
-    document.querySelectorAll('h3, h4, h5, h6').forEach(header => {
-      const top = window.scrollY + header.getBoundingClientRect().top
-
-      headerDetails.push({ top, elm: header as HTMLElement })
-    })
-
-    headerDetails.sort(({ top: aTop }, { top: bTop }) => aTop - bTop)
-
-    document.querySelectorAll('ul.toc').forEach(toc => {
-      const links = toc.querySelectorAll('[href]')
-      links.forEach(link => {
-        const [, href = ''] = (link as HTMLAnchorElement).href.split('#')
-
-        tocLookup[href] = [...(tocLookup[href] ?? []), link as HTMLAnchorElement]
-      })
-    })
-
-    function handleScroll() {
-      const threshold = 60
-      const [activeHeaders, inactiveHeaders] = partition(
-        headerDetails,
-        ({ top }) => top - threshold < window.scrollY
-      )
-
-      activeHeaders.forEach(({ elm }) =>
-        tocLookup[elm.id]?.forEach(link => {
-          link.classList.add('active')
-        })
-      )
-
-      inactiveHeaders.forEach(({ elm }) =>
-        tocLookup[elm.id]?.forEach(link => {
-          link.classList.remove('active')
-        })
-      )
-    }
-
-    const throttledHandleScroll = throttle(handleScroll, 200)
-
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true })
-  })
-</script>
-
-<style is:global>
-  [id] {
-    scroll-margin-top: 1.5rem;
-  }
-
-  .toc > li:has(> ul)::marker {
-    color: transparent;
-  }
-
-  #stickyBottom[data-status='open'] ul {
-    display: block;
-  }
-
-  #stickyBottom[data-status='closed'] ul {
-    display: none;
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translate3d(0, 50%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  .fadeInUp {
-    animation: fadeInUp 0.25s ease-out forwards;
-  }
-</style>
-
-<style>
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    display: grid;
-    grid-template-areas:
-      'left main right'
-      'bottom bottom bottom';
-
-    grid-template-columns: minmax(0px, 1fr) minmax(auto, 768px) minmax(0px, 1fr);
-  }
-</style>
