@@ -1,7 +1,7 @@
 ---
 company: "Fabernovel Technologies"
 initials: "FN"
-logo: "/zen.webp"
+logo: "./zen.webp"
 title: "Frontend Engineer"
 start: "Oct 2016"
 end: "Mar 2019"
