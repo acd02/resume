@@ -1,7 +1,7 @@
 ---
 company: "Le Bon Coin"
 initials: "LBC"
-logo: "/lbc.webp"
+logo: "./lbc.webp"
 title: "Staff Frontend Engineer"
 start: "Dec 2019"
 end: "Present"

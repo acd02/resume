@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://acd02-resume.netlify.app/sitemap-index.xml
