@@ -1,22 +1,22 @@
 ---
-import { Image } from "astro:assets";
-import Container from "./Container.astro";
-import X from "@lucide/astro/icons/x";
-import avatar from "../assets/poulpe.webp";
+import { Image } from 'astro:assets'
+import Container from './Container.astro'
+import X from '@lucide/astro/icons/x'
+import avatar from '../assets/poulpe.webp'
 
 interface Props {
-  pathname: string;
+  pathname: string
 }
 
-const { pathname: rawPathname } = Astro.props;
-const pathname = rawPathname.replace(/\/$/, "") || "/";
+const { pathname: rawPathname } = Astro.props
+const pathname = rawPathname.replace(/\/$/, '') || '/'
 
 const NAV_LINKS = [
-  { href: "/", label: "About" },
-  { href: "/skills", label: "Skills" },
-  { href: "/experience", label: "Experience" },
-  { href: "/education", label: "Education" },
-];
+  { href: '/', label: 'About' },
+  { href: '/skills', label: 'Skills' },
+  { href: '/experience', label: 'Experience' },
+  { href: '/education', label: 'Education' },
+]
 ---
 
 <header class="pointer-events-none relative z-50 flex flex-none flex-col print:hidden">
@@ -26,7 +26,11 @@ const NAV_LINKS = [
         <div class="flex flex-1">
           <a href="/" aria-label="Home" class="pointer-events-auto">
             <div class="size-10 rounded-full bg-white/90 p-0.5 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:ring-white/10">
-              <Image src={avatar} alt="" class="size-9 rounded-full object-cover dark:bg-zinc-800" />
+              <Image
+                src={avatar}
+                alt=""
+                class="size-9 rounded-full object-cover dark:bg-zinc-800"
+              />
             </div>
           </a>
         </div>
@@ -43,19 +47,39 @@ const NAV_LINKS = [
                 aria-label="Toggle navigation"
               >
                 Navigation
-                <svg viewBox="0 0 8 6" aria-hidden="true" class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400">
-                  <path d="M1.75 1.75 4 4.25l2.25-2.5" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <svg
+                  viewBox="0 0 8 6"
+                  aria-hidden="true"
+                  class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400"
+                >
+                  <path
+                    d="M1.75 1.75 4 4.25l2.25-2.5"
+                    fill="none"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </button>
 
               <div class="hidden" data-mobile-nav-panel>
-                <div class="fixed inset-0 z-50 bg-zinc-800/40 backdrop-blur-xs dark:bg-black/80" data-mobile-nav-backdrop />
+                <div
+                  class="fixed inset-0 z-50 bg-zinc-800/40 backdrop-blur-xs dark:bg-black/80"
+                  data-mobile-nav-backdrop
+                />
                 <div class="fixed inset-x-4 top-8 z-50 origin-top rounded-3xl bg-white p-8 ring-1 ring-zinc-900/5 dark:bg-zinc-900 dark:ring-zinc-800">
                   <div class="flex flex-row-reverse items-center justify-between">
-                    <button type="button" aria-label="Close menu" class="-m-1 p-1" data-mobile-nav-close>
+                    <button
+                      type="button"
+                      aria-label="Close menu"
+                      class="-m-1 p-1"
+                      data-mobile-nav-close
+                    >
                       <X size={24} class="size-6 text-zinc-500 dark:text-zinc-400" />
                     </button>
-                    <h2 class="text-sm font-medium text-zinc-600 dark:text-zinc-400">Navigation</h2>
+                    <h2 class="text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                      Navigation
+                    </h2>
                   </div>
                   <nav aria-label="mobile main" class="mt-6">
                     <ul class="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
@@ -63,7 +87,10 @@ const NAV_LINKS = [
                         <li>
                           <a
                             href={href}
-                            class:list={["block py-2", pathname === href && "text-violet-600 dark:text-violet-400"]}
+                            class:list={[
+                              'block py-2',
+                              pathname === href && 'text-violet-600 dark:text-violet-400',
+                            ]}
                           >
                             {label}
                           </a>
@@ -84,10 +111,10 @@ const NAV_LINKS = [
                   <a
                     href={href}
                     class:list={[
-                      "relative block px-3 py-2.5 transition",
+                      'relative block px-3 py-2.5 transition',
                       pathname === href
-                        ? "text-violet-600 dark:text-violet-400"
-                        : "text-zinc-600 hover:text-violet-700 dark:text-zinc-200 dark:hover:text-violet-400",
+                        ? 'text-violet-600 dark:text-violet-400'
+                        : 'text-zinc-600 hover:text-violet-700 dark:text-zinc-200 dark:hover:text-violet-400',
                     ]}
                   >
                     {label}
@@ -108,32 +135,32 @@ const NAV_LINKS = [
 </header>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
-    const nav = document.querySelector("[data-mobile-nav]");
-    if (!nav) return;
+  document.addEventListener('astro:page-load', () => {
+    const nav = document.querySelector('[data-mobile-nav]')
+    if (!nav) return
 
-    const toggle = nav.querySelector("[data-mobile-nav-toggle]");
-    const panel = nav.querySelector("[data-mobile-nav-panel]");
-    const closeBtn = nav.querySelector("[data-mobile-nav-close]");
-    const backdrop = nav.querySelector("[data-mobile-nav-backdrop]");
+    const toggle = nav.querySelector('[data-mobile-nav-toggle]')
+    const panel = nav.querySelector('[data-mobile-nav-panel]')
+    const closeBtn = nav.querySelector('[data-mobile-nav-close]')
+    const backdrop = nav.querySelector('[data-mobile-nav-backdrop]')
 
     function open() {
-      panel?.classList.remove("hidden");
-      toggle?.setAttribute("aria-expanded", "true");
+      panel?.classList.remove('hidden')
+      toggle?.setAttribute('aria-expanded', 'true')
     }
 
     function close() {
-      panel?.classList.add("hidden");
-      toggle?.setAttribute("aria-expanded", "false");
+      panel?.classList.add('hidden')
+      toggle?.setAttribute('aria-expanded', 'false')
     }
 
-    toggle?.addEventListener("click", () => {
-      const isOpen = toggle.getAttribute("aria-expanded") === "true";
-      isOpen ? close() : open();
-    });
+    toggle?.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true'
+      isOpen ? close() : open()
+    })
 
-    closeBtn?.addEventListener("click", close);
-    backdrop?.addEventListener("click", close);
-    panel?.querySelectorAll("a").forEach((link) => link.addEventListener("click", close));
-  });
+    closeBtn?.addEventListener('click', close)
+    backdrop?.addEventListener('click', close)
+    panel?.querySelectorAll('a').forEach(link => link.addEventListener('click', close))
+  })
 </script>
