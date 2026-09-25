@@ -1,17 +1,17 @@
 ---
-import { Image } from "astro:assets";
-import { getCollection, render } from "astro:content";
-import Link from "@lucide/astro/icons/link";
+import { Image } from 'astro:assets'
+import { getCollection, render } from 'astro:content'
+import Link from '@lucide/astro/icons/link'
 
-const experiences = await getCollection("experience");
-const sorted = experiences.sort((a, b) => a.data.order - b.data.order);
+const experiences = await getCollection('experience')
+const sorted = experiences.sort((a, b) => a.data.order - b.data.order)
 
 const entries = await Promise.all(
-  sorted.map(async (exp) => {
-    const { Content } = await render(exp);
-    return { data: exp.data, Content };
+  sorted.map(async exp => {
+    const { Content } = await render(exp)
+    return { data: exp.data, Content }
   })
-);
+)
 ---
 
 <ul role="list" class="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
@@ -39,7 +39,9 @@ const entries = await Promise.all(
       {data.link && (
         <p class="relative z-10 mt-auto flex items-center text-sm font-medium text-zinc-400 transition group-hover:text-violet-700 dark:text-zinc-200 dark:group-hover:text-violet-400">
           <Link size={16} class="flex-none" />
-          <a href={data.link.href} class="ml-2">{data.link.label}</a>
+          <a href={data.link.href} class="ml-2">
+            {data.link.label}
+          </a>
         </p>
       )}
     </li>

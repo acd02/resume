@@ -1,10 +1,10 @@
 ---
-company: "Blueboard (acquired by Channel Advisor)"
-initials: "BB"
-logo: "./blueboard.webp"
-title: "Frontend Engineer"
-start: "Apr 2019"
-end: "Nov 2019"
+company: 'Blueboard (acquired by Channel Advisor)'
+initials: 'BB'
+logo: './blueboard.webp'
+title: 'Frontend Engineer'
+start: 'Apr 2019'
+end: 'Nov 2019'
 order: 2
 ---
 

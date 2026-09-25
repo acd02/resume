@@ -1,15 +1,15 @@
 ---
-import ContainerOuter from "./ContainerOuter.astro";
-import ContainerInner from "./ContainerInner.astro";
+import ContainerOuter from './ContainerOuter.astro'
+import ContainerInner from './ContainerInner.astro'
 
 const LINKS = [
-  { href: "/", label: "About" },
-  { href: "/skills", label: "Skills" },
-  { href: "/experience", label: "Experience" },
-  { href: "/education", label: "Education" },
-];
+  { href: '/', label: 'About' },
+  { href: '/skills', label: 'Skills' },
+  { href: '/experience', label: 'Experience' },
+  { href: '/education', label: 'Education' },
+]
 
-const year = new Date().getFullYear();
+const year = new Date().getFullYear()
 ---
 
 <footer class="mt-32 flex-none print:hidden">
@@ -19,7 +19,10 @@ const year = new Date().getFullYear();
         <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div class="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-800 dark:text-zinc-200">
             {LINKS.map(({ href, label }) => (
-              <a href={href} class="transition hover:text-violet-700 dark:hover:text-violet-400">
+              <a
+                href={href}
+                class="transition hover:text-violet-700 dark:hover:text-violet-400"
+              >
                 {label}
               </a>
             ))}
