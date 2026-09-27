@@ -56,11 +56,11 @@ const skipToContentClasses = [
       </div>
     </div>
     <div class="relative flex w-full flex-col">
-      <Header pathname={Astro.url.pathname} />
+      <Header pathname={Astro.url.pathname} transition:animate="none" />
       <main id="main-content" class="flex-auto">
         <slot />
       </main>
-      <Footer />
+      <Footer transition:animate="none" />
     </div>
   </body>
 </html>
