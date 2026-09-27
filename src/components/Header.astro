@@ -8,14 +8,13 @@ interface Props {
   pathname: string
 }
 
-const { pathname: rawPathname } = Astro.props
-const pathname = rawPathname.replace(/\/$/, '') || '/'
+const { pathname } = Astro.props
 
 const NAV_LINKS = [
   { href: '/', label: 'About' },
-  { href: '/skills', label: 'Skills' },
-  { href: '/experience', label: 'Experience' },
-  { href: '/education', label: 'Education' },
+  { href: '/skills/', label: 'Skills' },
+  { href: '/experience/', label: 'Experience' },
+  { href: '/education/', label: 'Education' },
 ]
 ---
 
