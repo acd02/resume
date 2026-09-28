@@ -6,6 +6,9 @@ export default defineConfig({
   // Netlify appends trailing slashes.
   // Match that to avoid 301 redirects on every navigation
   trailingSlash: 'always',
+  prefetch: {
+    defaultStrategy: 'viewport',
+  },
   site: 'https://acd02-resume.netlify.app',
   integrations: [sitemap({ filter: page => !page.includes('/cv') })],
   vite: {
